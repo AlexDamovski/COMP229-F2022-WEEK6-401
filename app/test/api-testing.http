@@ -1,0 +1,51 @@
+POST http://localhost:3000/api/auth/register HTTP/1.1
+content-type: application/json
+
+{
+   "displayName": "John Doe",
+    "password": "123456",
+    "username": "JDoe",
+    "emailAddress": "JohnDoe@gmail.com"
+}
+
+
+###
+GET  http://localhost:3000/api/movies/list HTTP/1.1
+content-type: application/json
+
+###
+GET  http://localhost:3000/api/movies/634def7720db30affac4026d HTTP/1.1
+content-type: application/json
+
+
+###
+POST  http://localhost:3000/api/movies/add HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Neverending Story",
+    "year": "1976",
+    "director": "Michael Bane",
+    "genre": "Fantasy",
+    "runtime": 120
+}
+
+
+
+###
+PUT  http://localhost:3000/api/movies/Edit/634f30b3318ae41bd00aa848 HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Neverending Story",
+    "year": "1977",
+    "director": "Michael Bane",
+    "genre": "Fantasy",
+    "runtime": 120
+}
+
+
+
+###
+DELETE   http://localhost:3000/api/movies/delete/634f30b3318ae41bd00aa848 HTTP/1.1
+content-type: application/json
