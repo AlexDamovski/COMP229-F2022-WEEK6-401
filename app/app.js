@@ -14,7 +14,7 @@ import passport from 'passport';
 import passportLocal from 'passport-local';
 import flash from 'connect-flash';
 
-// modules for JWT support
+// modules for JWT Support
 import cors from 'cors';
 import passportJWT from 'passport-jwt';
 
@@ -38,8 +38,8 @@ import indexRouter from './routes/index.route.server.js'
 import movieRouter from './routes/movies.route.server.js';
 import authRouter from './routes/auth.route.server.js';
 
-//import api routers
-import authApiRouter from './routes/api/auth-api.router.server.js'
+// Import API Routes
+import authApiRouter from './routes/api/auth-api.router.server.js';
 
 // Instantiate Express Application
 const app = express();
@@ -65,8 +65,7 @@ app.use(cookieParser());
 // app.use(express.static(path.join(__dirname,'/client')));
 app.use(express.static(path.join(__dirname,'../public')));
 
-app.use(cors());// add CORS
-
+app.use(cors()); // adds CORS (cross-origin resource sharing) - To be removed on PRODUCTION
 
 // Auth Step 4 - Setup Express Session
 app.use(session({
@@ -89,22 +88,20 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
 // Setup JWT options
-let JWTOptions = {
-    JWTFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-    secretOrKey: secret
+let jwtOptions = {
+    jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+    secretOrKey: Secret
 }
 
-//Setup JWT Stratiey
-
-let strategy = new JWTStrategy(JWTOptions,(jwt_payload, done)=>{
+// Setup JWT Strategy
+let strategy = new JWTStrategy(jwtOptions, (jwt_payload, done) => {
     User.findById(jwt_payload.id)
-        .then(user =>{
+        .then(user => {
             return done(null, user)
         })
-        .catch(err =>{
-            return done(err, done)
+        .catch(err => {
+            return done(err, false)
         });
 });
 
@@ -114,8 +111,7 @@ passport.use(strategy);
 app.use('/', indexRouter);
 app.use('/', movieRouter);
 app.use('/', authRouter);
-app.use('/api/auth', authApiRouter)
+app.use('/api/auth', authApiRouter);
 
 
 export default app;
-
