@@ -112,7 +112,7 @@ app.use('/', indexRouter);
 app.use('/', movieRouter);
 app.use('/', authRouter);
 app.use('/api/auth', authApiRouter);
-app.use('/api/movies', moviesApiRouter);
+app.use('/api/movies', passport.authenticate('jwt', {session: false}), moviesApiRouter);
 
 
 export default app;
